@@ -130,7 +130,7 @@
                                                             <!-- Verificando permissão para excluir a usuário  -->
                                                             <a class='btn-lg btn-icon rounded-pill btn-outline-dark'
                                                             title='Excluir usuário'
-                                                            href="?page=delete_usuario&id=<?php echo $usuario['id']; ?>"
+                                                            href="?page=list_usuarios&acao=excluir&id=<?php echo $usuario['id']; ?>"
                                                             onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
                                                                 <i class='ti ti-trash ti-sm'></i>
                                                             </a>
@@ -178,3 +178,18 @@
         </div>
     </div>
 </div>
+<?php
+include('conn.php');
+
+if (isset($_GET['acao']) && $_GET['acao'] == 'excluir' && isset($_GET['id'])) {
+    $id = intval($_GET['id']); // segurança contra injeção
+
+    $sqlDelete = "DELETE FROM usuarios WHERE id = $id";
+    if (mysqli_query($conn, $sqlDelete)) {
+        echo "<script>alert('Usuário excluído com sucesso!');</script>";
+        echo "<script>window.location='?page=list_usuarios';</script>"; // recarrega a página
+    } else {
+        echo "<script>alert('Erro ao excluir usuário!');</script>";
+    }
+}
+?>
