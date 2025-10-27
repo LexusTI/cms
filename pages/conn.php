@@ -1,17 +1,16 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-// --- CONFIGURAÇÃO DO BANCO DE DADOS --- //
-$servidor = "localhost";    // normalmente "localhost"
-$usuario  = "root";         // usuário do banco
-$senha_db = "";             // senha do banco
-$banco    = "meu_banco";    // nome do banco de dados
+$servidor  = "localhost";
+$usuario   = "root";
+$senha_db  = "Lexus@57111072";
+$banco     = "projeto1";
 
-// --- CONECTA AO BANCO --- //
-$conexao = mysqli_connect($servidor, $usuario, $senha_db, $banco);
+$conn = mysqli_connect($servidor, $usuario, $senha_db, $banco);
 
-// Verifica conexão
-if (!$conexao) {
+if (!$conn) {
     die("Erro na conexão com o banco: " . mysqli_connect_error());
 }
 ?>

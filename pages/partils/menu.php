@@ -13,10 +13,10 @@
         <div data-i18n="Page 1">Quem Somos</div>
         </a>
     </li>
-    <li class="menu-item <?= ($page == 'produtos') ? 'active' : '' ?>">
-        <a href="index.php?page=produtos" class="menu-link">
+    <li class="menu-item <?= ($page == 'usuarios') ? 'active' : '' ?>">
+        <a href="index.php?page=usuarios" class="menu-link">
         <i class="menu-icon tf-icons ti ti-app-window"></i>
-        <div data-i18n="Page 2">Produtos</div>
+        <div data-i18n="Page 2">Usuários</div>
         </a>
     </li>
 </ul>

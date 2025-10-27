@@ -61,6 +61,9 @@ if (!isset($_SESSION['usuario'])) {
     <script src="../assets/vendor/js/template-customizer.js"></script>
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+
+
+
   </head>
 
   <body>
@@ -103,8 +106,10 @@ if (!isset($_SESSION['usuario'])) {
                   include 'home.php';
                 } else if ($page=='somos'){
                   include 'somos.php';
+                } else if ($page=='cad_usuarios'){
+                  include 'cad_usuarios.php';
                 } else{
-                  include 'produtos.php';
+                  include 'list_usuarios.php';
                 }
               ?>
             </div>
