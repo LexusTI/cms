@@ -1,28 +1,51 @@
 <?php
-// --- INÍCIO DO PHP --- //
 session_start();
+include('pages/conn.php'); // Conexão com o banco
 
-// Simula credenciais (pode trocar depois por banco de dados)
-$usuario_correto = "admin@example.com";
-$senha_correta   = "1234";
-
-// Verifica se o formulário foi enviado
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // Captura os dados enviados
+    // Captura os dados do formulário
     $email = trim($_POST['login-email'] ?? '');
     $senha = trim($_POST['login-password'] ?? '');
 
-    // Valida login
-    if ($email === $usuario_correto && $senha === $senha_correta) {
-        $_SESSION['usuario'] = $email;
-        header("Location: pages/index.php"); // redireciona após login
-        exit;
+    if (!empty($email) && !empty($senha)) {
+
+        // Busca o usuário pelo e-mail
+        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $usuario = $result->fetch_assoc();
+
+            // Verifica a senha com o hash salvo no banco
+            if (password_verify($senha, $usuario['senha'])) {
+
+                // Autenticação bem-sucedida → cria sessão
+                $_SESSION['usuario_id'] = $usuario['id'];
+                $_SESSION['usuario_nome'] = $usuario['nome'];
+                $_SESSION['usuario_email'] = $usuario['email'];
+
+                // Redireciona para a página inicial do sistema
+                header("Location: ./pages/index.php");
+                exit;
+            } else {
+                // Senha incorreta
+                echo "<div class='alert alert-danger'>Email ou senha incorretos!</div>";
+            }
+        } else {
+            // Usuário não encontrado
+            echo "<div class='alert alert-danger'>Email ou senha incorretos!</div>";
+        }
+
+        $stmt->close();
     } else {
-        $erro = "Email ou senha incorretos!";
+        echo "<div class='alert alert-warning'>Por favor, preencha todos os campos!</div>";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
 <!-- BEGIN: Head-->

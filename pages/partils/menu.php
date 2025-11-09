@@ -12,7 +12,7 @@
         <i class="menu-icon tf-icons ti ti-smart-home"></i>
         <div data-i18n="Page 1">Quem Somos</div>
         </a>
-    </li>
+    </li>    
     <li class="menu-item <?= ($page == 'usuarios') ? 'active' : '' ?>">
         <a href="index.php?page=usuarios" class="menu-link">
         <i class="menu-icon tf-icons ti ti-app-window"></i>
